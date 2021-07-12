@@ -294,10 +294,10 @@ export const setThemeColor = (theme) => document.documentElement.style.setProper
 export const Big = (number) => new BigNumber(number)
 
 export const urls = {
-  showTransaction: (tx) => `https://rinkeby.etherscan.io/tx/${tx}/`,
-  showAddress: (address) => `https://rinkeby.etherscan.io/address/${address}/`,
-  showToken: (address) => `https://rinkeby.etherscan.io/token/${address}/`,
-  showBlock: (block) => `https://rinkeby.etherscan.io/block/${block}/`,
+  showTransaction: (tx) => `https://hecoinfo.com/tx/${tx}/`,
+  showAddress: (address) => `https://hecoinfo.com/address/${address}/`,
+  showToken: (address) => `https://hecoinfo.com/token/${address}/`,
+  showBlock: (block) => `https://hecoinfo.com/block/${block}/`,
 }
 
 export const formatTime = (unix) => {
