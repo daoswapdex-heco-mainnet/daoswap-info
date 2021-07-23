@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useReducer, useMemo, useCallback, useState, useEffect } from 'react'
-import { timeframeOptions, SUPPORTED_LIST_URLS__NO_ENS } from '../constants'
+// import { timeframeOptions, SUPPORTED_LIST_URLS__NO_ENS } from '../constants'
+import { timeframeOptions } from '../constants'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
-import getTokenList from '../utils/tokenLists'
+// import getTokenList from '../utils/tokenLists'
 import { healthClient } from '../apollo/client'
 import { SUBGRAPH_HEALTH } from '../apollo/queries'
 dayjs.extend(utc)
@@ -262,23 +263,24 @@ export function useSessionStart() {
 }
 
 export function useListedTokens() {
-  const [state, { updateSupportedTokens }] = useApplicationContext()
+  const [state] = useApplicationContext()
+  // const [state, { updateSupportedTokens }] = useApplicationContext()
   const supportedTokens = state?.[SUPPORTED_TOKENS]
 
-  useEffect(() => {
-    async function fetchList() {
-      const allFetched = await SUPPORTED_LIST_URLS__NO_ENS.reduce(async (fetchedTokens, url) => {
-        const tokensSoFar = await fetchedTokens
-        const newTokens = await getTokenList(url)
-        return Promise.resolve([...tokensSoFar, ...newTokens.tokens])
-      }, Promise.resolve([]))
-      let formatted = allFetched?.map((t) => t.address.toLowerCase())
-      updateSupportedTokens(formatted)
-    }
-    if (!supportedTokens) {
-      fetchList()
-    }
-  }, [updateSupportedTokens, supportedTokens])
+  // useEffect(() => {
+  //   async function fetchList() {
+  //     const allFetched = await SUPPORTED_LIST_URLS__NO_ENS.reduce(async (fetchedTokens, url) => {
+  //       const tokensSoFar = await fetchedTokens
+  //       const newTokens = await getTokenList(url)
+  //       return Promise.resolve([...tokensSoFar, ...newTokens.tokens])
+  //     }, Promise.resolve([]))
+  //     let formatted = allFetched?.map((t) => t.address.toLowerCase())
+  //     updateSupportedTokens(formatted)
+  //   }
+  //   if (!supportedTokens) {
+  //     fetchList()
+  //   }
+  // }, [updateSupportedTokens, supportedTokens])
 
   return supportedTokens
 }

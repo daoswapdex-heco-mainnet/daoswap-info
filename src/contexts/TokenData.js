@@ -294,7 +294,7 @@ const getTopTokens = async (ethPrice, ethPriceOld) => {
           })
 
           // HOTFIX for Aave
-          if (data.id === '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9') {
+          if (data.id === '0x202b4936fe1a82a4965220860ae46d7d3939bb25') {
             const aaveData = await client.query({
               query: PAIR_DATA('0xdfc14d2af169b0d36c4eff567ada9b2e0cae044f'),
               fetchPolicy: 'cache-first',
@@ -422,7 +422,7 @@ const getTokenData = async (address, ethPrice, ethPriceOld) => {
     })
 
     // HOTFIX for Aave
-    if (data.id === '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9') {
+    if (data.id === '0x202b4936fe1a82a4965220860ae46d7d3939bb25') {
       const aaveData = await client.query({
         query: PAIR_DATA('0xdfc14d2af169b0d36c4eff567ada9b2e0cae044f'),
         fetchPolicy: 'cache-first',

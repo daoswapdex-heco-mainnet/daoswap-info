@@ -24,24 +24,27 @@ function formatPercent(rawPercent) {
 }
 
 export default function UniPrice() {
-  const daiPair = usePairData('0xa478c2975ab1ea89e8196811f51a7b7ade33eb11')
-  const usdcPair = usePairData('0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc')
-  const usdtPair = usePairData('0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852')
+  // const daiPair = usePairData('0xa478c2975ab1ea89e8196811f51a7b7ade33eb11')
+  // const usdcPair = usePairData('0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc')
+  const usdtPair = usePairData('0xecef6eb0b8d20489a351f3062f4e869165279d1c')
 
+  // const totalLiquidity = useMemo(() => {
+  //   return daiPair && usdcPair && usdtPair
+  //     ? daiPair.trackedReserveUSD + usdcPair.trackedReserveUSD + usdtPair.trackedReserveUSD
+  //     : 0
+  // }, [daiPair, usdcPair, usdtPair])
   const totalLiquidity = useMemo(() => {
-    return daiPair && usdcPair && usdtPair
-      ? daiPair.trackedReserveUSD + usdcPair.trackedReserveUSD + usdtPair.trackedReserveUSD
-      : 0
-  }, [daiPair, usdcPair, usdtPair])
+    return usdtPair ? usdtPair.trackedReserveUSD : 0
+  }, [usdtPair])
 
-  const daiPerEth = daiPair ? parseFloat(daiPair.token0Price).toFixed(2) : '-'
-  const usdcPerEth = usdcPair ? parseFloat(usdcPair.token0Price).toFixed(2) : '-'
+  // const daiPerEth = daiPair ? parseFloat(daiPair.token0Price).toFixed(2) : '-'
+  // const usdcPerEth = usdcPair ? parseFloat(usdcPair.token0Price).toFixed(2) : '-'
   const usdtPerEth = usdtPair ? parseFloat(usdtPair.token1Price).toFixed(2) : '-'
 
   return (
     <PriceCard>
       <AutoColumn gap="10px">
-        <RowFixed>
+        {/* <RowFixed>
           <TYPE.main>DAI/ETH: {formattedNum(daiPerEth, true)}</TYPE.main>
           <TYPE.light style={{ marginLeft: '10px' }}>
             {daiPair && totalLiquidity ? formatPercent(daiPair.trackedReserveUSD / totalLiquidity) : '-'}
@@ -52,7 +55,7 @@ export default function UniPrice() {
           <TYPE.light style={{ marginLeft: '10px' }}>
             {usdcPair && totalLiquidity ? formatPercent(usdcPair.trackedReserveUSD / totalLiquidity) : '-'}
           </TYPE.light>
-        </RowFixed>
+        </RowFixed> */}
         <RowFixed>
           <TYPE.main>USDT/ETH: {formattedNum(usdtPerEth, true)}</TYPE.main>
           <TYPE.light style={{ marginLeft: '10px' }}>
