@@ -42,14 +42,14 @@ export function getPoolLink(token0Address, token1Address = null, remove = false)
     return (
       `https://app.heco.daoswap.cc/` +
       (remove ? `remove` : `add`) +
-      `/${token0Address === '0x5545153ccfca01fbd7dd11c0b23ba694d9509a6f' ? 'ETH' : token0Address}/${'ETH'}`
+      `/${token0Address === '0x5545153ccfca01fbd7dd11c0b23ba694d9509a6f' ? 'HT' : token0Address}/${'HT'}`
     )
   } else {
     return (
       `https://app.heco.daoswap.cc/` +
       (remove ? `remove` : `add`) +
-      `/${token0Address === '0x5545153ccfca01fbd7dd11c0b23ba694d9509a6f' ? 'ETH' : token0Address}/${
-        token1Address === '0x5545153ccfca01fbd7dd11c0b23ba694d9509a6f' ? 'ETH' : token1Address
+      `/${token0Address === '0x5545153ccfca01fbd7dd11c0b23ba694d9509a6f' ? 'HT' : token0Address}/${
+        token1Address === '0x5545153ccfca01fbd7dd11c0b23ba694d9509a6f' ? 'HT' : token1Address
       }`
     )
   }
@@ -60,13 +60,13 @@ export function getSwapLink(token0Address, token1Address = null) {
     return `https://app.heco.daoswap.cc/swap?inputCurrency=${token0Address}`
   } else {
     return `https://app.heco.daoswap.cc/swap?inputCurrency=${
-      token0Address === '0x5545153ccfca01fbd7dd11c0b23ba694d9509a6f' ? 'ETH' : token0Address
-    }&outputCurrency=${token1Address === '0x5545153ccfca01fbd7dd11c0b23ba694d9509a6f' ? 'ETH' : token1Address}`
+      token0Address === '0x5545153ccfca01fbd7dd11c0b23ba694d9509a6f' ? 'HT' : token0Address
+    }&outputCurrency=${token1Address === '0x5545153ccfca01fbd7dd11c0b23ba694d9509a6f' ? 'HT' : token1Address}`
   }
 }
 
 export function getMiningPoolLink(token0Address) {
-  return `https://app.heco.daoswap.cc/#/uni/ETH/${token0Address}`
+  return `https://app.heco.daoswap.cc/#/uni/HT/${token0Address}`
 }
 
 export function getUniswapAppLink(linkVariable) {
@@ -75,7 +75,7 @@ export function getUniswapAppLink(linkVariable) {
     return baseUniswapUrl
   }
 
-  return `${baseUniswapUrl}/ETH/${linkVariable}`
+  return `${baseUniswapUrl}/HT/${linkVariable}`
 }
 
 export function localNumber(val) {
