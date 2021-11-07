@@ -31,3 +31,10 @@ export const PAIR_BLACKLIST = ['0xb6a741f37d6e455ebcc9f17e2c16d0586c3f57a5']
  * For tokens that cause erros on fee calculations
  */
 export const FEE_WARNING_TOKENS = ['0xd46ba6d942050d489dbd938a2c909a5d5039a161']
+
+// DAO-USDT
+export const PAID_USDT_DAO = '0x1dbcac9e084a25d542893b14128a5910df43a6b7'
+
+// Node Type
+export const NODE_TYPE_STELLAR_MIN_USD_VALUE = 50000
+export const NODE_TYPE_PLANETARY_MIN_USD_VALUE = 5000

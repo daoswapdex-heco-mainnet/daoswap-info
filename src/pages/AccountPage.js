@@ -16,7 +16,12 @@ import { PageWrapper, ContentWrapper, StyledIcon } from '../components'
 import DoubleTokenLogo from '../components/DoubleLogo'
 import { Bookmark, Activity } from 'react-feather'
 import Link from '../components/Link'
-import { FEE_WARNING_TOKENS } from '../constants'
+import {
+  FEE_WARNING_TOKENS,
+  PAID_USDT_DAO,
+  NODE_TYPE_STELLAR_MIN_USD_VALUE,
+  NODE_TYPE_PLANETARY_MIN_USD_VALUE,
+} from '../constants'
 import { BasicLink } from '../components/Link'
 import { useMedia } from 'react-use'
 import Search from '../components/Search'
@@ -107,9 +112,16 @@ function AccountPage({ account }) {
 
   // if any position has token from fee warning list, show warning
   const [showWarning, setShowWarning] = useState(false)
+  const [nodeTypeValue, setNodeTypeValue] = useState()
   useEffect(() => {
     if (positions) {
       for (let i = 0; i < positions.length; i++) {
+        if (positions[i].pair.id.toLowerCase() === PAID_USDT_DAO) {
+          setNodeTypeValue(
+            (parseFloat(positions[i].liquidityTokenBalance) / parseFloat(positions[i].pair.totalSupply)) *
+              positions[i].pair.reserveUSD
+          )
+        }
         if (
           FEE_WARNING_TOKENS.includes(positions[i].pair.token0.id) ||
           FEE_WARNING_TOKENS.includes(positions[i].pair.token1.id)
@@ -118,7 +130,7 @@ function AccountPage({ account }) {
         }
       }
     }
-  }, [positions])
+  }, [positions, nodeTypeValue])
 
   // settings for list view and dropdowns
   const hideLPContent = positions && positions.length === 0
@@ -275,6 +287,29 @@ function AccountPage({ account }) {
                   <RowFixed align="flex-end">
                     <TYPE.header fontSize={'24px'} lineHeight={1} color={aggregateFees && 'green'}>
                       {aggregateFees ? formattedNum(aggregateFees, true, true) : '-'}
+                    </TYPE.header>
+                  </RowFixed>
+                </AutoColumn>
+              </AutoRow>
+            </Panel>
+          )}
+          {/* TODO: node info */}
+          {!hideLPContent && (
+            <Panel style={{ height: '100%', marginBottom: '1rem' }}>
+              <AutoRow gap="20px">
+                <AutoColumn gap="10px">
+                  <RowBetween>
+                    <TYPE.body>Node Type</TYPE.body>
+                    <div />
+                  </RowBetween>
+                  <RowFixed align="flex-end">
+                    <TYPE.header fontSize={'24px'} lineHeight={1}>
+                      {nodeTypeValue >= NODE_TYPE_STELLAR_MIN_USD_VALUE
+                        ? 'Stellar'
+                        : nodeTypeValue < NODE_TYPE_STELLAR_MIN_USD_VALUE &&
+                          nodeTypeValue >= NODE_TYPE_PLANETARY_MIN_USD_VALUE
+                        ? 'Planet'
+                        : 'None'}
                     </TYPE.header>
                   </RowFixed>
                 </AutoColumn>
