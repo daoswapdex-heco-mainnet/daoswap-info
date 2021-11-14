@@ -21,10 +21,14 @@ import {
   PAID_USDT_DAO,
   NODE_TYPE_STELLAR_MIN_USD_VALUE,
   NODE_TYPE_PLANETARY_MIN_USD_VALUE,
+  USDT_DAO_STAKING_REWARDS_ADDRESS,
 } from '../constants'
 import { BasicLink } from '../components/Link'
 import { useMedia } from 'react-use'
 import Search from '../components/Search'
+
+import { getWeb3, getContractByABI, weiToEther } from '../utils/web3'
+import { abi as STAKING_REWARDS_ABI } from '../constants/contractJson/StakingRewards.json'
 
 const AccountWrapper = styled.div`
   background-color: rgba(255, 255, 255, 0.2);
@@ -110,6 +114,23 @@ function AccountPage({ account }) {
       : 0
   }, [transactions])
 
+  // get staking rewards contract info
+  const [nodeTypeNumber, setNodeTypeNumber] = useState()
+  const web3 = getWeb3()
+  const contract = getContractByABI(STAKING_REWARDS_ABI, USDT_DAO_STAKING_REWARDS_ADDRESS, web3)
+  useEffect(() => {
+    if (!nodeTypeNumber || nodeTypeNumber <= 0) {
+      contract.methods.balanceOf(account).call(
+        {
+          from: account,
+        },
+        (e, r) => {
+          setNodeTypeNumber(parseFloat(weiToEther(r, web3)))
+        }
+      )
+    }
+  }, [contract, account, nodeTypeNumber, setNodeTypeNumber, web3])
+
   // if any position has token from fee warning list, show warning
   const [showWarning, setShowWarning] = useState(false)
   const [nodeTypeValue, setNodeTypeValue] = useState()
@@ -118,7 +139,8 @@ function AccountPage({ account }) {
       for (let i = 0; i < positions.length; i++) {
         if (positions[i].pair.id.toLowerCase() === PAID_USDT_DAO) {
           setNodeTypeValue(
-            (parseFloat(positions[i].liquidityTokenBalance) / parseFloat(positions[i].pair.totalSupply)) *
+            ((parseFloat(nodeTypeNumber) + parseFloat(positions[i].liquidityTokenBalance)) /
+              parseFloat(positions[i].pair.totalSupply)) *
               positions[i].pair.reserveUSD
           )
         }
@@ -130,7 +152,9 @@ function AccountPage({ account }) {
         }
       }
     }
-  }, [positions, nodeTypeValue])
+  }, [positions, nodeTypeNumber, nodeTypeValue])
+
+  console.info(nodeTypeValue)
 
   // settings for list view and dropdowns
   const hideLPContent = positions && positions.length === 0

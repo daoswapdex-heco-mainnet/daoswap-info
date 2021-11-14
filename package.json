@@ -89,5 +89,8 @@
       "last 1 safari version"
     ]
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "web3": "^1.6.0"
+  }
 }
